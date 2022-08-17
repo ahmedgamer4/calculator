@@ -1,4 +1,9 @@
-const calc = document.getElementById('calc');
+const nmbrs = document.getElementsByClassName('n');
+const screen = document.getElementById('screen');
+const equal = document.getElementById('e');
+let eq = equal.addEventListener('click', e => {
+    return 1;
+})
 
 function add(a, b) {
     return a + b;
@@ -42,3 +47,30 @@ function operate(opr, a, b) {
 //     }
 // }
 // makeGrid();
+
+function getNumber() {
+    for (var i = 0; i < nmbrs.length; i++) {
+        nmbrs.item(i).onclick = e => {
+            screen.textContent = (e.target.textContent);
+        }
+    }
+}
+
+
+
+function main() {
+    let list = [];
+
+    if (!equal) {
+        for (var i = 0; i < nmbrs.length; i++) {
+            nmbrs.item(i).onclick = e => {
+                screen.textContent = (e.target.textContent);
+                list.push(screen.textContent);
+            }
+        }
+        
+    }
+    console.log(list);
+}
+
+main();
