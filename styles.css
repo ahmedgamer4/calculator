@@ -86,12 +86,16 @@ button:hover{
 }
 
 #screen{
-    width: 400px;
+    width: 370px;
     height: 250px;
     background-color: rgba(215, 250, 247, 0.544);
     margin-bottom: -10;
     border-radius: 40px;
     margin-top: 10px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 50px;
+    text-align: left;
+    margin: 10px auto;
 }
 
 #nmbrs{
@@ -107,7 +111,7 @@ button:hover{
     top: 100px;
 }
 
-#r{
+#e{
     position: absolute;
     left: 277px;
     top: 200px;
@@ -117,4 +121,9 @@ button:hover{
     position: absolute;
     left: 277px;
     top: 300px;
+}
+
+#m{
+    position: absolute;
+    bottom: 310px;
 }

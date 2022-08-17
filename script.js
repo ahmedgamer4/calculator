@@ -1,9 +1,8 @@
 const nmbrs = document.getElementsByClassName('n');
 const screen = document.getElementById('screen');
 const equal = document.getElementById('e');
-let eq = equal.addEventListener('click', e => {
-    return 1;
-})
+const opr = document.getElementsByClassName('opr');
+
 
 function add(a, b) {
     return a + b;
@@ -22,17 +21,20 @@ function divide(a, b) {
 }
 
 function operate(opr, a, b) {
-    if (opr === "+") {
+    if (opr == "+") {
         add(a, b);
     }
-    else if (opr === "-") {
+    else if (opr == "-") {
         subtract(a, b);
     }
-    else if (opr === "*") {
+    else if (opr == "x") {
         multiply(a, b);
     }
-    else {
+    else if (opr == "/"){
         divide(a, b);
+    }
+    else {
+        return 1;
     }
 }
 
@@ -51,7 +53,25 @@ function operate(opr, a, b) {
 function getNumber() {
     for (var i = 0; i < nmbrs.length; i++) {
         nmbrs.item(i).onclick = e => {
-            screen.textContent = (e.target.textContent);
+            if (screen.textContent.length > 12) {
+                screen.textContent += "";
+            }
+            else{
+                screen.textContent += (e.target.textContent);
+            }
+        }
+    }
+}
+
+function getOperator() {
+    for (var i = 0; i < opr.length; i++) {
+        opr.item(i).onclick = e => {
+            if (screen.textContent.length > 12) {
+                screen.textContent += "";
+            }
+            else {
+                screen.textContent = (e.target.textContent);
+            }
         }
     }
 }
@@ -59,18 +79,13 @@ function getNumber() {
 
 
 function main() {
-    let list = [];
-
-    if (!equal) {
-        for (var i = 0; i < nmbrs.length; i++) {
-            nmbrs.item(i).onclick = e => {
-                screen.textContent = (e.target.textContent);
-                list.push(screen.textContent);
-            }
-        }
-        
-    }
-    console.log(list);
+    let firstNum = getNumber();
+    let operator = getOperator();
+    screen.textContent = ""
+    let secondNum = getNumber();
+    equal.addEventListener('click', e => {
+        console.log(operate(operator, firstNum, secondNum));
+    });
 }
 
-main();
+main()
