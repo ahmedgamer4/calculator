@@ -1,7 +1,13 @@
-const nmbrs = document.getElementsByClassName('n');
+const nmbrs = document.querySelectorAll('.n');
 const screen = document.getElementById('screen');
 const equal = document.getElementById('e');
-const opr = document.getElementsByClassName('opr');
+const opr = document.querySelectorAll('.opr');
+const clear = document.getElementById('c');
+
+let oldNum = "";
+let newNum = "";
+let resultNum;
+let operator;
 
 
 function add(a, b) {
@@ -20,72 +26,87 @@ function divide(a, b) {
     return a / b;
 }
 
-function operate(opr, a, b) {
-    if (opr == "+") {
-        add(a, b);
+function operate() {
+
+    oldNum = parseFloat(oldNum);
+    newNum = parseFloat(newNum);
+
+    switch (operator) {
+        case "p": 
+            resultNum = add(oldNum, newNum);
+            break;
+        
+        case "s": 
+            resultNum = subtract(oldNum, newNum);
+            break;
+
+        case "m":
+            resultNum =  multiply(oldNum, newNum);
+            break;
+
+        case "d":
+            resultNum = divide(oldNum, newNum);
+            break;
+
+        default:
+            resultNum = newNum;
     }
-    else if (opr == "-") {
-        subtract(a, b);
+    
+
+    if (!isFinite(resultNum)) {
+        if (isNaN(resultNum)) {
+            resultNum = 'Nah we do not need NaN';
+        }
+        else {
+            resultNum = "Wrong";
+            clear.classList.add('show');
+        }
     }
-    else if (opr == "x") {
-        multiply(a, b);
-    }
-    else if (opr == "/"){
-        divide(a, b);
+
+    screen.textContent = resultNum;
+    equal.setAttribute('data-result', resultNum);
+
+    oldNum = 0;
+    newNum = resultNum;
+    console.log(resultNum);
+}
+
+function clearALl() {
+    oldNum = '';
+    newNum = '';
+    screen.textContent = '0';
+    equal.setAttribute('data-result', resultNum);
+}
+
+let setNum = function () {
+    if (resultNum) {
+        newNum = this.getAttribute('data-num');
+        resultNum = '';
     }
     else {
-        return 1;
+        newNum += this.getAttribute('data-num');
     }
+
+    screen.textContent = newNum;
 }
 
-// function makeGrid(){
-//     const btns = document.getElementById('num-opr')
-//     btns.style.setProperty('--grid-rows', 4);
-//     btns.style.setProperty('--grid-cols', 4);
+function moveNum() {
+    oldNum = newNum;
+    newNum = '';
+    operator = this.getAttribute('data-ops');
 
-//     for(i = 0; i < 16; ++i) {
-//         const node = document.createElement('buttons');
-//         btns.appendChild(node).className = 'node';
-//     }
-// }
-// makeGrid();
-
-function getNumber() {
-    for (var i = 0; i < nmbrs.length; i++) {
-        nmbrs.item(i).onclick = e => {
-            if (screen.textContent.length > 12) {
-                screen.textContent += "";
-            }
-            else{
-                screen.textContent += (e.target.textContent);
-            }
-        }
-    }
+    equal.setAttribute('data-result', '');
 }
 
-function getOperator() {
-    for (var i = 0; i < opr.length; i++) {
-        opr.item(i).onclick = e => {
-            if (screen.textContent.length > 12) {
-                screen.textContent += "";
-            }
-            else {
-                screen.textContent = (e.target.textContent);
-            }
-        }
-    }
-}
+nmbrs.forEach(nmbr => {
+    nmbr.addEventListener('click', setNum);
+});
 
+opr.forEach(op => {
+    op.addEventListener('click', moveNum);
+});
 
+equal.addEventListener('click', operate);
 
-function main() {
-    let firstNum = getNumber();
-    let operator = getOperator();
-    screen.textContent = ""
-    let secondNum = getNumber();
-    equal.addEventListener('click', e => {
-        console.log(operate(operator, firstNum, secondNum));
-    });
-}
+clear.addEventListener('click', clearALl);
 
-main()

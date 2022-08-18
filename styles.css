@@ -42,7 +42,7 @@ body{
 #num-opr{
     width: 370px;
     height: 400px;
-    background-color: rgb(215, 246, 250);
+    background-color: rgba(215, 246, 250, 0.368);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
